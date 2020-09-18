@@ -1,0 +1,27 @@
+.column {
+  float: left;
+  width: 95%;
+  padding: 2%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+body{
+  background-color: #7a2038;
+}
+listWord{
+  margin: 5%;
+  padding-left: 10%;
+}
+wordTile{
+  margin: 10%;
+  color: #7a2038;
+  /* border-bottom: grey 5px; */
+}
+listBackground{ 
+  padding: "5%" !important; 
+}
