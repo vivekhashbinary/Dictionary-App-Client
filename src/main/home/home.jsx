@@ -12,16 +12,10 @@ function Home() {
         <div>
             <h1>Home Page</h1>
             <button onClick={() => {
-                dispatch(increment())
-            }}>+</button>
-            <button onClick={() => {
-                dispatch(decrement())
-            }}>-</button>
-            <button onClick={() => {
                 dispatch(getwords())
             }}>GET INFO</button>
             <button onClick={() => {
-                history.push('/dictionary')
+                history.push('/')
             }}>NAVIGATE</button>
         </div>
     );

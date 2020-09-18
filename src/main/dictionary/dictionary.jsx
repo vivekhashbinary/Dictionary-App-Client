@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './dictionary.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { getwords } from '../../actions';
 import Button from '@material-ui/core/Button';
@@ -20,8 +19,10 @@ export const Dictionary = () => {
     const words = useSelector(state => state.Dictionary.data.data)
     const [searchWord, setSearchWord] = useState('')
     const [newMeaning, setNewMeaning] = useState()
-    const [openModal, setModalState] = useState(false)
+    const [addWordModal, setAddWordModalState] = useState(false)
+    const [showWordModal, setShowWordModal] = useState(false)
     const [filterWord, setFilterWord] = useState('')
+    const [indexSelected, setIndexSelected] = useState()
     // if(words) {
     //     filteredWord = words.filter(word => {
     //         word.toLowerCase().includes(filterWord)
@@ -30,40 +31,55 @@ export const Dictionary = () => {
     if(!words) {
         return (
             <>
-                <CircularProgress color="secondary" />
+                <CircularProgress className="loader" color="secondary" />
             </>
         )
     } else {
         return (
             <>
-                <Modal isOpen={openModal}>
-                    <TextField onChange={(e) => { setSearchWord(e.target.value) }} id="outlined-basic" label="Enter the Word" variant="outlined" />
-                    <Button onClick={() => { handleClick() }} color="secondary">Search</Button>
-                    <Paper variant="outlined">
-                        <p>{newMeaning ? newMeaning.word : "NA"}</p>
-                        <p>{newMeaning ? newMeaning.definitions : "NA"}</p>
-                        <Button onClick={() => { addWord() }}>ADD</Button>
-                        <button onClick={() => setModalState(false)}>Cancel</button>
-                    </Paper>
+                <Modal contentClassName="show-word-modal-style" style={{
+                    overlay: {
+                        backgroundColor: 'grey'
+                    }
+                }} isOpen={showWordModal} onRequestClose={() => { setShowWordModal(false) }}>
+                    <h4>{words[indexSelected] ? words[indexSelected].word : ""}</h4>
+                    <p><strong>Definition: </strong>{words[indexSelected] ? words[indexSelected].definitions[0] : ""}</p>
+                    <p><strong>Example: </strong>{words[indexSelected] ? words[indexSelected].examples[0].text : ""}</p>
                 </Modal>
                 <div className="column">
-
+                    <Modal style={{
+                        overlay: {
+                            backgroundColor: 'grey'
+                        }
+                    }} isOpen={addWordModal} onRequestClose={() => { setAddWordModalState(false) }}>
+                        <TextField onChange={(e) => { setSearchWord(e.target.value) }} id="filled-size-normal" placeholder="Search" size="normal" />
+                        <SearchIcon style={{ cursor: "pointer" }} onClick={() => { handleClick() }} />
+                        {/* <Button onClick={() => { handleClick() }} color="primary">Search</Button> */}
+                        <Paper variant="">
+                            <p>{newMeaning ? newMeaning.word : ""}</p>
+                            <p>{newMeaning ? newMeaning.definitions : ""}</p>
+                        </Paper>
+                        <Button onClick={() => { addWord() }} style={{ visibility: "visible" }}>ADD</Button>
+                    </Modal>
                     <div className="row">
                         <Fab style={{
                             bottom: 40,
                             right: 80,
                             position: 'fixed'
-                        }} onClick={() => setModalState(true)} color="primary" aria-label="add">
+                        }} onClick={() => setAddWordModalState(true)} color="primary" aria-label="add">
                             <AddIcon />
                         </Fab>
                     </div>
                     <div className="row">
-                        <TextField onChange={(e) => { setFilterWord(e.target.value) }} id="outlined-basic" label="Search" variant="outlined" />
                         <Paper style={{ padding: "5%" }} variant="outlined">
+                            <div>
+                                <TextField onChange={(e) => { setFilterWord(e.target.value) }} id="filled-size-normal" placeholder="Search" size="small" />
+                                <SearchIcon style={{ cursor: "pointer" }} />
+                            </div>
                             <h4>Total Words:{words.length}</h4>
                             {
-                                words.map((word) => (
-                                    <div className="wordTile" >
+                                words.map((word, index) => (
+                                    <div onClick={() => { setShowWordModal(true); setIndexSelected(index) }} className="wordTile" >
                                         <h4 className="listWord">{word.word}</h4>
                                         <p>{word.definitions ? word.definitions[0] : "NA"}</p>
                                         <hr></hr>
@@ -96,7 +112,7 @@ export const Dictionary = () => {
                 console.log("Meaning Added:", data.data)
                 dispatch(getwords());
                 setNewMeaning(undefined);
-                setModalState(false);
+                setAddWordModalState(false);
             }).catch((e) => {
                 console.log("Error:", e)
             })

@@ -25,3 +25,15 @@ wordTile{
 listBackground{ 
   padding: "5%" !important; 
 }
+.show-word-modal-style {
+width: 200px;
+height: 300px;
+}
+.loader{
+  margin: 0;
+    color: beige !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+}
