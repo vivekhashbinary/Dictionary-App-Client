@@ -22,12 +22,21 @@ export const Dictionary = () => {
     const [addWordModal, setAddWordModalState] = useState(false)
     const [showWordModal, setShowWordModal] = useState(false)
     const [filterWord, setFilterWord] = useState('')
+    const [filterSearchWords, setFilterSearchWords] = useState([])
     const [indexSelected, setIndexSelected] = useState()
     // if(words) {
-    //     filteredWord = words.filter(word => {
-    //         word.toLowerCase().includes(filterWord)
+    // filteredWord = words.filter(word => {word.toLowerCase().includes(filterWord)
     //     })
     // }
+    // useEffect(() => {
+    //     if(words) {
+    //         let filter = words.filter(word => {
+    //             word.word.toLowerCase().includes(filterWord)
+    //         })
+    //         setFilterSearchWord(filter)
+    //         console.log(filter);
+    //     }
+    // }, [filterWord, words])
     if(!words) {
         return (
             <>
@@ -73,13 +82,15 @@ export const Dictionary = () => {
                     <div className="row">
                         <Paper style={{ padding: "5%" }} variant="outlined">
                             <div>
-                                <TextField onChange={(e) => { setFilterWord(e.target.value) }} id="filled-size-normal" placeholder="Search" size="small" />
+                                <TextField onChange={(e) => {
+                                    setFilterWord(e.target.value)
+                                }} id="filled-size-normal" placeholder="Search" size="small" />
                                 <SearchIcon style={{ cursor: "pointer" }} />
                             </div>
                             <h4>Total Words:{words.length}</h4>
                             {
                                 words.map((word, index) => (
-                                    <div onClick={() => { setShowWordModal(true); setIndexSelected(index) }} className="wordTile" >
+                                    <div key={index} onClick={() => { setShowWordModal(true); setIndexSelected(index) }} className="wordTile" >
                                         <h4 className="listWord">{word.word}</h4>
                                         <p>{word.definitions ? word.definitions[0] : "NA"}</p>
                                         <hr></hr>
