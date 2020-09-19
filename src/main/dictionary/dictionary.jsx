@@ -72,10 +72,10 @@ export const Dictionary = () => {
                     </div>
                     <div className="row">
                         <Paper style={{ padding: "5%" }} variant="outlined">
-                            <div>
+                            {/* <div>
                                 <TextField onChange={(e) => { setFilterWord(e.target.value) }} id="filled-size-normal" placeholder="Search" size="small" />
                                 <SearchIcon style={{ cursor: "pointer" }} />
-                            </div>
+                            </div> */}
                             <h4>Total Words:{words.length}</h4>
                             {
                                 words.map((word, index) => (
@@ -93,7 +93,7 @@ export const Dictionary = () => {
         );
     }
     async function handleClick() {
-        await Axios.get('http://localhost:8000/dictionary/getword/' + searchWord).then((data) => {
+        await Axios.get('https://dictionaryapp-api.herokuapp.com/dictionary/getword/' + searchWord).then((data) => {
             console.log("DATA:", data.data)
             setNewMeaning(data.data)
 
@@ -103,7 +103,7 @@ export const Dictionary = () => {
     }
     async function addWord() {
         if(newMeaning) {
-            await Axios.post('http://localhost:8000/dictionary/post', {
+            await Axios.post('https://dictionaryapp-api.herokuapp.com/dictionary/post', {
                 word: newMeaning.word.toUpperCase(),
                 definitions: newMeaning.definitions,
                 examples: newMeaning.examples

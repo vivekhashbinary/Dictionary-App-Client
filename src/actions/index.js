@@ -22,8 +22,7 @@ export const getwords = () => {
             type: 'GET_DATA_REQUEST'
         })
         try {
-            const proxyurl = "https://cors-anywhere.herokuapp.com/";
-            const url = "http://localhost:8000/dictionary/allwords"
+            const url = "https://dictionaryapp-api.herokuapp.com/dictionary/allwords"
             const res = await Axios.get(url);
             console.log("INSIDE WORDS");
             // console.log(res.data);
