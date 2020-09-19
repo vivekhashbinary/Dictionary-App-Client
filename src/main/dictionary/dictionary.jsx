@@ -72,10 +72,10 @@ export const Dictionary = () => {
                     </div>
                     <div className="row">
                         <Paper style={{ padding: "5%" }} variant="outlined">
-                            {/* <div>
+                            <div>
                                 <TextField onChange={(e) => { setFilterWord(e.target.value) }} id="filled-size-normal" placeholder="Search" size="small" />
                                 <SearchIcon style={{ cursor: "pointer" }} />
-                            </div> */}
+                            </div>
                             <h4>Total Words:{words.length}</h4>
                             {
                                 words.map((word, index) => (
