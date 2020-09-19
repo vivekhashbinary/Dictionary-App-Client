@@ -24,10 +24,6 @@ export const Dictionary = () => {
     const [filterWord, setFilterWord] = useState('')
     const [filterSearchWords, setFilterSearchWords] = useState([])
     const [indexSelected, setIndexSelected] = useState()
-    // if(words) {
-    // filteredWord = words.filter(word => {word.toLowerCase().includes(filterWord)
-    //     })
-    // }
     // useEffect(() => {
     //     if(words) {
     //         let filter = words.filter(word => {
@@ -63,7 +59,6 @@ export const Dictionary = () => {
                     }} isOpen={addWordModal} onRequestClose={() => { setAddWordModalState(false) }}>
                         <TextField onChange={(e) => { setSearchWord(e.target.value) }} id="filled-size-normal" placeholder="Search" size="normal" />
                         <SearchIcon style={{ cursor: "pointer" }} onClick={() => { handleClick() }} />
-                        {/* <Button onClick={() => { handleClick() }} color="primary">Search</Button> */}
                         <Paper variant="">
                             <p>{newMeaning ? newMeaning.word : ""}</p>
                             <p>{newMeaning ? newMeaning.definitions : ""}</p>
@@ -81,12 +76,12 @@ export const Dictionary = () => {
                     </div>
                     <div className="row">
                         <Paper style={{ padding: "5%" }} variant="outlined">
-                            <div>
+                            {/* <div>
                                 <TextField onChange={(e) => {
                                     setFilterWord(e.target.value)
                                 }} id="filled-size-normal" placeholder="Search" size="small" />
                                 <SearchIcon style={{ cursor: "pointer" }} />
-                            </div>
+                            </div> */}
                             <h4>Total Words:{words.length}</h4>
                             {
                                 words.map((word, index) => (
@@ -105,7 +100,7 @@ export const Dictionary = () => {
     }
     async function handleClick() {
         await Axios.get('https://dictionaryapp-api.herokuapp.com/dictionary/getword/' + searchWord).then((data) => {
-            console.log("DATA:", data.data)
+            // console.log("DATA:", data.data)
             setNewMeaning(data.data)
 
         }).catch((e) => {
@@ -133,4 +128,3 @@ export const Dictionary = () => {
 
 
 export default Dictionary
-{/* word.toLowerCase().includes(filterWord) */ }
